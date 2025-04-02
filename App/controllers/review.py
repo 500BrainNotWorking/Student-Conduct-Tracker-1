@@ -19,21 +19,11 @@ def create_review(staff, student, starRating, details):
   newReview.comments=[]
   db.session.add(newReview)
   """Adjust the student's karma based on the star rating of the review."""
-  if newReview.starRating == 5:
-    points = 5
-  elif newReview.starRating == 4:
-    points = 3
-  elif newReview.starRating == 3:
-    points = 1
-  elif newReview.starRating == 2:
-    points = -1
-  else:
-    points = -3
   current_karma = student.get_karma()
   if current_karma:
-    new_karma_points = current_karma.points + points
+    new_karma_points = current_karma.points + newReview.value
   else:
-     new_karma_points = points
+     new_karma_points = newReview.value
   newKarma = Karma(new_karma_points, student.ID, newReview.ID)
   db.session.add(newKarma)
   try:
@@ -121,7 +111,8 @@ def vote(review_id):
   if review:
     student = get_student_by_id(review.studentID)
     current_karma = student.get_karma()
-    new_karma_points = current_karma.points + review.starRating * ((review.likes - review.dislikes) / (4 * (review.likes + review.dislikes)))
+    review.value *= ((review.likes - review.dislikes) / (2 * (review.likes + review.dislikes)))
+    new_karma_points = current_karma.points + review.value
     newKarma = Karma(new_karma_points, student.ID, review.ID)
   db.session.add(newKarma)
   try:
