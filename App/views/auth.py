@@ -40,8 +40,8 @@ def login_action():
       return redirect("/getMainPage")  # Redirect to student dashboard
     # elif (user.user_type == "student"):
     #   return redirect("/StudentHome")  # Redirect to staff dashboard
-    elif (user.user_type == "admin"):
-      return redirect("/admin")
+    # elif (user.user_type == "admin"):
+    #   return redirect("/admin")
   return render_template('login.html', message=message)
 
 
