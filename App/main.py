@@ -97,6 +97,52 @@ def populate_database():
                 degree="Bachelor of Computer Science (General)",
                 gpa="")
 
+  create_student(username="chloe",
+                firstname="Chloe",
+                lastname="Leyton",
+                email="chloe.leyton@my.uwi.edu",
+                password="chloepass",
+                faculty="FST",
+                admittedTerm="2021/2022",
+                UniId='816031555',
+                degree="Bachelor of Computer Science (General)",
+                gpa="")
+
+  create_student(username="mark",
+                firstname="Mark",
+                lastname="Goldbridge",
+                email="mark.goldbridge@my.uwi.edu",
+                password="markpass",
+                faculty="FST",
+                admittedTerm="2021/2022",
+                UniId='816031699',
+                degree="Bachelor of Computer Science (General)",
+                gpa="")
+
+
+  create_student(username="elijah",
+                firstname="Elijah",
+                lastname="Sinclair",
+                email="elijah.sinclair@my.uwi.edu",
+                password="elijahpass",
+                faculty="FST",
+                admittedTerm="2021/2022",
+                UniId='816031700',
+                degree="Bachelor of Computer Science (General)",
+                gpa="")
+
+
+  create_student(username="jake",
+                firstname="Jake",
+                lastname="Peraltar",
+                email="jake.peraltar@my.uwi.edu",
+                password="jakepass",
+                faculty="FST",
+                admittedTerm="2021/2022",
+                UniId='816036534',
+                degree="Bachelor of Computer Science (General)",
+                gpa="")
+
   #Creating staff
   create_staff(username="tim",
               firstname="Tim",
