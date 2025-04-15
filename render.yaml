@@ -37,8 +37,10 @@ envVarGroups:
     value: production
   - key: FLASK_APP
     value: wsgi.py
-  - key: SECRET_KEY
-    value: secret-key #Add rthe secret key here
+
+
+  # - key: SECRET_KEY
+  #   value: secret-key #Add rthe secret key here
     
 
 databases:
