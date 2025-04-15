@@ -31,6 +31,7 @@ def identify_page():
 def login_action():
   data = request.form
   message="Bad username or password"
+  
   user = login(data['username'], data['password'])
   if user:
     user_type = type(user)
@@ -46,6 +47,7 @@ def login_action():
 
 
 @auth_views.route('/logout', methods=['GET'])
+@login_required
 def logout_action():
   logout_user()
   # data = request.form
