@@ -553,192 +553,192 @@ def add_admin(username, firstname, lastname, email, password, faculty):
 
 # 2 search for student (by id, fname, or lname)
 
-@app.cli.command("search_student", help="Search for a student by UniId, first name, or last name")
-@click.argument("search_term")
-def search_student(search_term):
+# @app.cli.command("search_student", help="Search for a student by UniId, first name, or last name")
+# @click.argument("search_term")
+# def search_student(search_term):
 
-    students = Student.query.filter(
-        (Student.UniId == search_term) |
-        (Student.firstname.contains(search_term)) |
-        (Student.lastname.contains(search_term))
-    ).all()
+#     students = Student.query.filter(
+#         (Student.UniId == search_term) |
+#         (Student.firstname.contains(search_term)) |
+#         (Student.lastname.contains(search_term))
+#     ).all()
 
-    if students:
-        for student in students:
-            print(f"Found student: {student.fullname}, UniId: {student.UniId}")
-    else:
-        print(f"No student found for search term: {search_term}")
+#     if students:
+#         for student in students:
+#             print(f"Found student: {student.fullname}, UniId: {student.UniId}")
+#     else:
+#         print(f"No student found for search term: {search_term}")
 
 
 # 3 notify students
 
-@app.cli.command("notify_students", help="Notify students")
-@click.argument("message")
-def notify_students(message):
-    students = Student.query.all()
-    for student in students:
-        print(f"Notifying {student.fullname} with message: {message}")
-    print("Notifications sent to all students.")
+# @app.cli.command("notify_students", help="Notify students")
+# @click.argument("message")
+# def notify_students(message):
+#     students = Student.query.all()
+#     for student in students:
+#         print(f"Notifying {student.fullname} with message: {message}")
+#     print("Notifications sent to all students.")
     
     
  # 4 update karma points 
  
-@app.cli.command("update_karma")
-@click.argument("student_id", type=int)
-@with_appcontext
-def update_karma(student_id):
-    print(f"Updating karma for student with ID: {student_id}")
+# @app.cli.command("update_karma")
+# @click.argument("student_id", type=int)
+# @with_appcontext
+# def update_karma(student_id):
+#     print(f"Updating karma for student with ID: {student_id}")
     
-    karma = Karma.query.filter_by(studentID=student_id).first()
+#     karma = Karma.query.filter_by(studentID=student_id).first()
 
-    if not karma:
-        print(f"No karma record found for student with ID: {student_id}. Creating a new one...")
-        karma_created = create_karma(student_id)
-        if not karma_created:
-            print(f"Failed to create karma for student with ID: {student_id}")
-            return
+#     if not karma:
+#         print(f"No karma record found for student with ID: {student_id}. Creating a new one...")
+#         karma_created = create_karma(student_id)
+#         if not karma_created:
+#             print(f"Failed to create karma for student with ID: {student_id}")
+#             return
     
-    if not calculate_review_points(student_id):
-        print(f"Failed to update review points for student with ID: {student_id}")
-        return
+#     if not calculate_review_points(student_id):
+#         print(f"Failed to update review points for student with ID: {student_id}")
+#         return
 
-    if not calculate_accomplishment_points(student_id):
-        print(f"Failed to update accomplishment points for student with ID: {student_id}")
-        return
+#     if not calculate_accomplishment_points(student_id):
+#         print(f"Failed to update accomplishment points for student with ID: {student_id}")
+#         return
 
-    if not calculate_incident_points(student_id):
-        print(f"Failed to update incident points for student with ID: {student_id}")
-        return
+#     if not calculate_incident_points(student_id):
+#         print(f"Failed to update incident points for student with ID: {student_id}")
+#         return
 
-    if not calculate_academic_points(student_id):
-        print(f"Failed to update academic points for student with ID: {student_id}")
-        return
+#     if not calculate_academic_points(student_id):
+#         print(f"Failed to update academic points for student with ID: {student_id}")
+#         return
 
-    if not calculate_ranks():
-        print("Failed to recalculate ranks for all students.")
-        return
+#     if not calculate_ranks():
+#         print("Failed to recalculate ranks for all students.")
+#         return
 
-    updated_karma = Karma.query.filter_by(studentID=student_id).first()
+#     updated_karma = Karma.query.filter_by(studentID=student_id).first()
 
-    if updated_karma:
-        print(f"\nUpdated Karma for student ID {student_id}:")
-        print(f"Total Karma Points: {updated_karma.points}")
-        print(f"Academic Points: {updated_karma.academicPoints}")
-        print(f"Accomplishment Points: {updated_karma.accomplishmentPoints}")
-        print(f"Review Points: {updated_karma.reviewsPoints}")
-        print(f"Incident Points: {updated_karma.incidentPoints}")
-        print(f"Rank: {updated_karma.rank}")
-    else:
-        print(f"Failed to retrieve updated karma for student with ID: {student_id}")
+#     if updated_karma:
+#         print(f"\nUpdated Karma for student ID {student_id}:")
+#         print(f"Total Karma Points: {updated_karma.points}")
+#         print(f"Academic Points: {updated_karma.academicPoints}")
+#         print(f"Accomplishment Points: {updated_karma.accomplishmentPoints}")
+#         print(f"Review Points: {updated_karma.reviewsPoints}")
+#         print(f"Incident Points: {updated_karma.incidentPoints}")
+#         print(f"Rank: {updated_karma.rank}")
+#     else:
+#         print(f"Failed to retrieve updated karma for student with ID: {student_id}")
     
 
 # 5 assign badges
 
-@app.cli.command("assign_badge", help="Assign a badge to a student")
-@click.argument("UniId", type=int)  
-@click.argument("badge_name")
-@click.argument("details")
-@click.argument("image_link")
-@click.argument("student_seen", type=bool)
-def assign_badge(UniId, badge_name, details, image_link, student_seen):
-    student = get_student_by_UniId(UniId)
-    if student:
-        badge = Badges(
-            student=student,
-            name=badge_name,
-            details=details,
-            imageLink=image_link,
-            studentSeen=student_seen
-        )
-        db.session.add(badge)
-        db.session.commit()
-        print(f"Badge '{badge_name}' assigned to student {UniId}")
-    else:
-        print(f"Student with ID {UniId} not found.")
+# @app.cli.command("assign_badge", help="Assign a badge to a student")
+# @click.argument("UniId", type=int)  
+# @click.argument("badge_name")
+# @click.argument("details")
+# @click.argument("image_link")
+# @click.argument("student_seen", type=bool)
+# def assign_badge(UniId, badge_name, details, image_link, student_seen):
+#     student = get_student_by_UniId(UniId)
+#     if student:
+#         badge = Badges(
+#             student=student,
+#             name=badge_name,
+#             details=details,
+#             imageLink=image_link,
+#             studentSeen=student_seen
+#         )
+#         db.session.add(badge)
+#         db.session.commit()
+#         print(f"Badge '{badge_name}' assigned to student {UniId}")
+#     else:
+#         print(f"Student with ID {UniId} not found.")
         
 
 # 6 generate leaderboard
 
-@app.cli.command("generate_leaderboard", help="Generate leaderboard of students")
-def generate_leaderboard():
-    students = Student.query.order_by(Student.gpa.desc()).all() 
-    print("Leaderboard:")
-    for student in students:
-        print(f"{student.fullname} - GPA: {student.gpa}")
+# @app.cli.command("generate_leaderboard", help="Generate leaderboard of students")
+# def generate_leaderboard():
+#     students = Student.query.order_by(Student.gpa.desc()).all() 
+#     print("Leaderboard:")
+#     for student in students:
+#         print(f"{student.fullname} - GPA: {student.gpa}")
         
 # 7 manage accomplishments
 
-@app.cli.command("manage_accomplishment", help="Manage student accomplishments")
-@click.argument("UniId") 
-@click.argument("action", type=click.Choice(['add', 'update', 'delete']))
-@click.argument("description")
-@click.option('--topic', required=False, help="Topic for the accomplishment (for add/update)")
-@click.option('--staff', required=False, help="Staff member's name (for add/update)") 
-@click.option('--points', default=0.0, help="Points for the accomplishment (for add/update)")
-@click.option('--status', default='pending', help="Status of the accomplishment (for add/update)")
-def manage_accomplishment(UniId, action, description, topic, staff, points, status):
-    student = get_student_by_UniId(UniId)
+# @app.cli.command("manage_accomplishment", help="Manage student accomplishments")
+# @click.argument("UniId") 
+# @click.argument("action", type=click.Choice(['add', 'update', 'delete']))
+# @click.argument("description")
+# @click.option('--topic', required=False, help="Topic for the accomplishment (for add/update)")
+# @click.option('--staff', required=False, help="Staff member's name (for add/update)") 
+# @click.option('--points', default=0.0, help="Points for the accomplishment (for add/update)")
+# @click.option('--status', default='pending', help="Status of the accomplishment (for add/update)")
+# def manage_accomplishment(UniId, action, description, topic, staff, points, status):
+#     student = get_student_by_UniId(UniId)
     
-    if student:
-        if action == 'add':
-            if not topic or not staff:
-                print("Both 'topic' and 'staff' are required for adding an accomplishment.")
-                return
-            create_accomplishment(student.ID, 
-                                  verified=False, 
-                                  taggedStaffName=staff, 
-                                  topic=topic, 
-                                  details=description, 
-                                  points=points, 
-                                  status=status)
-            print(f"Accomplishment added for student {UniId}.")
+#     if student:
+#         if action == 'add':
+#             if not topic or not staff:
+#                 print("Both 'topic' and 'staff' are required for adding an accomplishment.")
+#                 return
+#             create_accomplishment(student.ID, 
+#                                   verified=False, 
+#                                   taggedStaffName=staff, 
+#                                   topic=topic, 
+#                                   details=description, 
+#                                   points=points, 
+#                                   status=status)
+#             print(f"Accomplishment added for student {UniId}.")
         
-        elif action == 'update':
-            accomplishment = get_accomplishments_by_studentID(student.ID)  
-            if accomplishment:
-                accomplishment.details = description
-                if topic:
-                    accomplishment.topic = topic
-                if staff:
-                    firstname, lastname = staff.split(' ')
-                    staff_member = get_staff_by_name(firstname, lastname)
-                    if staff_member:
-                        accomplishment.taggedStaffId = staff_member.ID
-                if points:
-                    accomplishment.points = points
-                if status:
-                    accomplishment.status = status
-                db.session.commit()
-                print(f"Accomplishment updated for student {UniId}.")
-            else:
-                print(f"No existing accomplishment found for student {UniId}.")
+#         elif action == 'update':
+#             accomplishment = get_accomplishments_by_studentID(student.ID)  
+#             if accomplishment:
+#                 accomplishment.details = description
+#                 if topic:
+#                     accomplishment.topic = topic
+#                 if staff:
+#                     firstname, lastname = staff.split(' ')
+#                     staff_member = get_staff_by_name(firstname, lastname)
+#                     if staff_member:
+#                         accomplishment.taggedStaffId = staff_member.ID
+#                 if points:
+#                     accomplishment.points = points
+#                 if status:
+#                     accomplishment.status = status
+#                 db.session.commit()
+#                 print(f"Accomplishment updated for student {UniId}.")
+#             else:
+#                 print(f"No existing accomplishment found for student {UniId}.")
 
-        elif action == 'delete':
-            accomplishment = get_accomplishments_by_studentID(student.ID) 
-            if accomplishment:
-                db.session.delete(accomplishment)
-                db.session.commit()
-                print(f"Accomplishment deleted for student {UniId}.")
-            else:
-                print(f"No existing accomplishment found for student {UniId}.")
-    else:
-        print(f"Student with UniId {UniId} not found.")
+#         elif action == 'delete':
+#             accomplishment = get_accomplishments_by_studentID(student.ID) 
+#             if accomplishment:
+#                 db.session.delete(accomplishment)
+#                 db.session.commit()
+#                 print(f"Accomplishment deleted for student {UniId}.")
+#             else:
+#                 print(f"No existing accomplishment found for student {UniId}.")
+#     else:
+#         print(f"Student with UniId {UniId} not found.")
         
 
-@app.cli.command("create_karma")
-@click.argument("student_id")
-@click.argument("points")
-def new_karma(student_id, points):
-   karma = Karma(points, student_id)
-   db.session.add(karma)
-   db.session.commit()
+# @app.cli.command("create_karma")
+# @click.argument("student_id")
+# @click.argument("points")
+# def new_karma(student_id, points):
+#    karma = Karma(points, student_id)
+#    db.session.add(karma)
+#    db.session.commit()
 
-@app.cli.command("karma_history")
-@click.argument("student_id")
-def view_karma_history(student_id):
-   student = get_student_by_id(student_id)
-   if (student):
-      print (student.karma_history)
+# @app.cli.command("karma_history")
+# @click.argument("student_id")
+# def view_karma_history(student_id):
+#    student = get_student_by_id(student_id)
+#    if (student):
+#       print (student.karma_history)
 
 @app.cli.command("add_student", help="Add a student manually")
 @click.argument("uni_id", required=True)
