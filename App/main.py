@@ -15,6 +15,8 @@ from App.controllers import (setup_jwt, setup_flask_login)
 
 from App.views import views
 
+from flask_session import Session 
+
 
  
 
@@ -200,7 +202,6 @@ def populate_database():
               faculty="FST")
   db.session.commit()
       
-    
  
  
 def create_app(config_overrides={}):
@@ -219,6 +220,11 @@ def create_app(config_overrides={}):
   app.config['MAIL_USERNAME'] = "ttstudentconduct@gmail.com"
   app.config['MAIL_PASSWORD'] = "uvxa guap twon mzwa"
   app.config['MAIL_DEFAULT_SENDER'] = 'ttstudentconduct@gmail.com'
+  app.config['SESSION_TYPE'] = 'filesystem'
+  app.config['SESSION_PERMANENT'] = False
+  app.config['SESSION_USE_SIGNER'] = True
+  app.config['SESSION_FILE_DIR'] = './flask_session_data'
+  Session(app)
   CORS(app)
   photos = UploadSet('photos', TEXT + DOCUMENTS + IMAGES)
   configure_uploads(app, photos)
