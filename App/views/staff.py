@@ -1002,7 +1002,7 @@ def signup():
         password = request.form['password']
         confirm_password = request.form['confirm_password']
 
-        temp_user = get_user_by_username(username)
+        temp_user = get_staff_by_username(username)
 
         if temp_user:
           return render_template('SignUp.html', message="Username is already taken!")
