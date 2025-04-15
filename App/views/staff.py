@@ -19,7 +19,7 @@ from App.controllers import (
     get_reviews, get_review, edit_review, edit_review_work, delete_review_work,
     create_comment, get_comment, get_comment_staff, get_user_by_username,
     get_reply, create_reply, get_all_reviews, create_staff, get_student_review_index, get_karma_history,
-    like, dislike, update_staff_profile, get_all_students_json)            #added get_reviews
+    like, dislike, update_staff_profile, get_all_students_json, get_staff_by_username)            #added get_reviews
 
 
 staff_views = Blueprint('staff_views',
