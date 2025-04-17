@@ -1,23 +1,14 @@
-from flask import Blueprint, render_template, jsonify, request, send_from_directory, flash, redirect, url_for, make_response
-from flask_jwt_extended import jwt_required, current_user as jwt_current_user
-from App.database import db
+from flask import Blueprint, render_template, request, flash, redirect, url_for, make_response
 from flask_login import login_required, current_user
-from sqlalchemy import or_
-from datetime import datetime
 import textwrap
 
-from App.models import Student, Staff, User, IncidentReport, Review, Comment, Reply
+from App.models import Student, Staff, User, Review
 
 from App.controllers import (
-    jwt_authenticate, create_incident_report, get_student_by_UniId,
-    get_accomplishment, get_student_by_id, get_recommendations_staff,
-    get_recommendation, get_staff_by_id, get_students_by_faculty,
-    get_staff_by_id, get_requested_accomplishments, get_transcript,
-    get_total_As, get_student_for_ir, create_review, get_karma,
-    get_requested_accomplishments_count,
-    get_recommendations_staff_count, calculate_ranks, get_all_verified, 
-    get_reviews, get_review, edit_review, edit_review_work, delete_review_work,
-    create_comment, get_comment, get_comment_staff, get_user_by_username,
+    get_student_by_UniId, get_student_by_id,
+    get_staff_by_id, get_staff_by_id, create_review, get_karma,
+    calculate_ranks, get_reviews, get_review, edit_review_work, delete_review_work,
+    create_comment, get_comment, get_comment_staff,
     get_reply, create_reply, get_all_reviews, create_staff, get_student_review_index, get_karma_history,
     like, dislike, update_staff_profile, get_all_students_json, get_staff_by_username, login_user)            #added get_reviews
 
