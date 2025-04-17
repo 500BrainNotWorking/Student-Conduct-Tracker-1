@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, jsonify, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 import textwrap
 
@@ -476,3 +476,39 @@ def js_review_detail(review_id):
     
     # Render the ReviewDetail page using your provided template.
     return render_template('ReviewDetail.html', review=review)
+
+
+@staff_views.route('/search-students', methods=['GET'])
+def search_students():
+    query = request.args.get('q', '')
+    students = Student.query.filter(
+        (Student.firstname.ilike(f'%{query}%')) |
+        (Student.lastname.ilike(f'%{query}%')) |
+        ((Student.firstname + ' ' + Student.lastname).ilike(f'%{query}%'))
+    ).all()
+
+    results = [{
+        "id": s.UniId,
+        "name": f"{s.firstname} {s.lastname}"
+    } for s in students]
+
+    return jsonify(results)
+
+
+@staff_views.route('/get_student_name', methods=['POST'])
+def get_student_name():
+    student_id = request.json['studentID']
+
+    student = get_student_by_UniId(student_id)
+
+    return jsonify({'studentName': student.fullname})
+
+
+@staff_views.route('/studentSearch', methods=['GET'])
+def student_search_page():
+    return render_template('StudentSearch.html')
+
+
+@staff_views.route('/reviewSearch', methods=['GET'])
+def review_search_page():
+    return render_template('ReviewSearch.html')
