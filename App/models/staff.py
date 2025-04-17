@@ -7,13 +7,7 @@ class Staff(User):
   __tablename__ = 'staff'
   ID = db.Column(db.Integer, db.ForeignKey('user.ID', name='fk_staff_user'), primary_key=True)
   reviews = db.relationship('Review', backref='staffReviews', lazy='joined')
-  reports = db.relationship('IncidentReport',
-                            backref='staffReports',
-                            lazy='joined')
   profile_pic = db.Column(db.Text, nullable=True)
-  pendingAccomplishments = db.relationship('Accomplishment',
-                                           backref='studentaccomplishments',
-                                           lazy='joined')
 
   __mapper_args__ = {"polymorphic_identity": "staff"}
 
