@@ -39,7 +39,7 @@ def populate_database():
   from App.models import Student, Staff, Review  # or wherever your models live
   from App.controllers import (
       create_student, create_staff, create_admin,
-      create_job_recommendation, create_accomplishment,
+      #create_job_recommendation, create_accomplishment,
       create_review, get_staff_by_id, get_student_by_UniId
   )
   from App.database import db
@@ -167,18 +167,6 @@ def populate_database():
               password="password",
               faculty="FST")
 
-  create_job_recommendation(
-      2, 7, False, "Job", "1",
-      "I am seeking a recommnedation for a position at a company", "WebTech",
-      "Web Developer", "webtech@gmail.com")
-  create_job_recommendation(
-      2, 8, False, "Job", "1",
-      "I am seeking a recommnedation for a position at a company", "WebTech",
-      "Web Developer", "webtech@gmail.com")
-  create_accomplishment(2, False, "Permanand Mohan", "Runtime",
-                        "I placed first at runtime.", 1, "None Yet")
-  create_accomplishment(2, False, "Vijayanandh Rajamanickam", "Runtime",
-                        "I placed first at runtime.", 1, "None Yet")
 
 
   staff = get_staff_by_id(7)
@@ -240,7 +228,7 @@ def create_app(config_overrides={}):
     from App.models import Student, Staff, Review  # or wherever your models live
     from App.controllers import (
         create_student, create_staff, create_admin,
-        create_job_recommendation, create_accomplishment,
+        #create_job_recommendation, create_accomplishment,
         create_review, get_staff_by_id, get_student_by_UniId
     )
     from App.database import db

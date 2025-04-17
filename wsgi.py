@@ -11,12 +11,21 @@ from App.models import Student, Karma, Badges, Accomplishment, Comment
 from App.models import User
 from App.controllers import (
     create_student, create_staff, create_admin, get_all_users_json,
-    get_all_users, get_transcript, get_student_by_UniId, get_total_As, get_total_courses_attempted,
-    calculate_academic_score, create_review, create_incident_report,
-    create_accomplishment, get_staff_by_id, get_student_by_id,
-    create_job_recommendation, create_karma, get_karma, create_badge, 
+    get_all_users, 
+    #get_transcript, 
+    get_student_by_UniId, 
+    #get_total_As, get_total_courses_attempted,
+    #calculate_academic_score, 
+    create_review, 
+    #create_incident_report,
+    #create_accomplishment, 
+    get_staff_by_id, get_student_by_id,
+    #create_job_recommendation, 
+    create_karma, get_karma, 
+    #create_badge, 
     calculate_ranks,
-    get_accomplishments_by_studentID, get_staff_by_name, create_comment, delete_student,
+    #get_accomplishments_by_studentID, 
+    get_staff_by_name, create_comment, delete_student,
     update_student)
 
 # This commands file allow you to create convenient CLI commands for testing controllers
@@ -107,19 +116,6 @@ def initialize():
                email="Permanand.Mohan@sta.uwi.edu",
                password="password",
                faculty="FST")
-
-  create_job_recommendation(
-      2, 7, False, "Job", "1",
-      "I am seeking a recommnedation for a position at a company", "WebTech",
-      "Web Developer", "webtech@gmail.com")
-  create_job_recommendation(
-      2, 8, False, "Job", "1",
-      "I am seeking a recommnedation for a position at a company", "WebTech",
-      "Web Developer", "webtech@gmail.com")
-  create_accomplishment(2, False, "Permanand Mohan", "Runtime",
-                        "I placed first at runtime.", 1, "None Yet")
-  create_accomplishment(2, False, "Vijayanandh Rajamanickam", "Runtime",
-                        "I placed first at runtime.", 1, "None Yet")
 
 
   staff = get_staff_by_id(7)
@@ -264,14 +260,14 @@ def performance_tests_command(target, users, ramp, duration):
             print(f"Running performance test: {name}")
             subprocess.run([
                 "locust", "-f", file, "--headless", "-u", str(users), "-r", str(ramp),
-                "--host", "https://8080-500brainnot-studentcond-o0bye94mtub.ws-us118.gitpod.io", "--run-time", duration, #Gitpod url: https://8080-500brainnot-studentcond-0z6711a4bxh.ws-us118.gitpod.io
+                "--host", "https://8080-500brainnot-studentcond-t8aifwj4lfk.ws-us118.gitpod.io/", "--run-time", duration, #Gitpod url: https://8080-500brainnot-studentcond-0z6711a4bxh.ws-us118.gitpod.io
                 "--csv", f"perf_results/{name}"
             ])
     elif target in locust_file_map:
         file = locust_file_map[target]
         subprocess.run([
             "locust", "-f", file, "--headless", "-u", str(users), "-r", str(ramp),
-            "--host", "https://8080-500brainnot-studentcond-o0bye94mtub.ws-us118.gitpod.io", "--run-time", duration, #Gitpod url: https://8080-500brainnot-studentcond-0z6711a4bxh.ws-us118.gitpod.io
+            "--host", "https://8080-500brainnot-studentcond-t8aifwj4lfk.ws-us118.gitpod.io/", "--run-time", duration, #Gitpod url: https://8080-500brainnot-studentcond-0z6711a4bxh.ws-us118.gitpod.io
             "--csv", f"perf_results/{target}" 
         ])
     else:
