@@ -7,7 +7,7 @@ import subprocess
 
 from App.database import db, get_migrate
 from App.main import create_app
-from App.models import Student, Karma, Badges, Accomplishment, Comment
+from App.models import Student, Karma, Comment
 from App.models import User
 from App.controllers import (
     create_student, create_staff, create_admin, get_all_users_json,
