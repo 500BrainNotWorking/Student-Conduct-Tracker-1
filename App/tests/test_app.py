@@ -97,28 +97,6 @@ class StudentUnitTests(unittest.TestCase):
         student = Student(username="billy", firstname="Billy", lastname="John", email="billy@example.com", password="billypass", faculty="FST", admittedTerm="2022/2023", UniId="816000000", degree="BSc Computer Science", gpa="3.5")
         assert student.username == "billy"
 
-    # def test_get_json(self):
-    #     student = Student(username="billy", firstname="Billy", lastname="John", email="billy@example.com", password="billypass", faculty="FST", admittedTerm="2022/2023", UniId="816000000", degree="BSc Computer Science", gpa="3.5")
-    #     karma = get_karma(student.karmaID)
-    #     student_json = student.to_json(karma)
-    #     print(student_json)
-    #     self.assertDictEqual(student_json, {"studentID": None,
-    #                                         "username": "billy",
-    #                                         "firstname": "Billy",
-    #                                         "lastname": "John",
-    #                                         "gpa": "3.5",
-    #                                         "email": "billy@example.com",
-    #                                         "faculty": "FST",
-    #                                         "degree": "BSc Computer Science",
-    #                                         "admittedTerm": "2022/2023",
-    #                                         "UniId": "816000000",
-    #                                         # "reviews": [],
-    #                                         "accomplishments": [],
-    #                                         "incidents": [],
-    #                                         "grades": [],
-    #                                         "transcripts": [],
-    #                                         "karmaScore": None,
-    #                                         "karmaRank": None})
 
 
 class StaffUnitTests(unittest.TestCase):
@@ -210,30 +188,13 @@ def test_authenticate():
 
 class UserIntegrationTests(unittest.TestCase):
 
-    # def test_get_all_users_json(self):
-    #     #user = create_user("rick", "Rick", "Grimes", "rickpass", "rick@example.com", "FST")
-    #     users_json = get_all_users_json()
-    #     self.assertListEqual([{"id":1, 
-    #         "username":"bob", 
-    #         "firstname":"Bob", 
-    #         "lastname":"Smith", 
-    #         "email":"bob@example.com", 
-    #         "faculty":"FST"},
-    #         {
-    #         "id":2, 
-    #         "username":"rick", 
-    #         "firstname":"Rick", 
-    #         "lastname":"Grimes", 
-    #         "email":"rick@example.com", 
-    #         "faculty":"FST"
-    #         }], users_json)
-
+    
     def test_create_user(self):
         user = create_user("rick", "Rick", "Grimes", "rickpass", "rick@example.com", "FST")
         assert user.username == "rick"
 
 
-    # Tests data changes in the database
+    
     def test_update_user(self):
         update_username(1, "ronnie")
         user = get_user(1)
@@ -261,10 +222,7 @@ class UserIntegrationTests(unittest.TestCase):
         assert user.faculty == "New Faculty"
 
 
-# class StudentIntegrationTests(unittest.TestCase):
 
-#      def test_create_student(self):
-#         assert create_student(username="billy", firstname="Billy", lastname="John", email="billy@example.com", password="billypass", faculty="FST", admittedTerm="2022/2023", UniId="816000000", degree="BSc Computer Science", gpa="3.5") == True
         
 
 class StudentIntegrationTests(unittest.TestCase):
@@ -272,30 +230,7 @@ class StudentIntegrationTests(unittest.TestCase):
     def test_create_student(self):
         assert create_student(username="billy", firstname="Billy", lastname="John", email="billy@example.com", password="billypass", faculty="FST", admittedTerm="2022/2023", UniId="816000000", degree="BSc Computer Science", gpa="3.5") == True
         
-    # def test_get_student_by_id(self):
-    #     #create_student(username="willy", firstname="Willy", lastname="Fohn", email="willy@example.com", password="willypass", faculty="FST", admittedTerm="2022/2023", UniId="816000001", degree="BSc Computer Science", gpa="2.5")
-    #     student = get_student_by_id(5)
-
-    #     expected_student = {
-    #             "username":"billy", 
-    #             "firstname":"Billy", 
-    #             "lastname":"John", 
-    #             "email":"billy@example.com", 
-    #             "faculty":"FST", 
-    #             "admittedTerm":"2022/2023", 
-    #             "UniId":"816000000", 
-    #             "degree":"BSc Computer Science", 
-    #             "gpa":"3.5"
-    #     }
-    #     self.assertEqual(student.username, expected_student["username"])
-    #     self.assertEqual(student.firstname, expected_student["firstname"])
-    #     self.assertEqual(student.lastname, expected_student["lastname"])
-    #     self.assertEqual(student.email, expected_student["email"])
-    #     self.assertEqual(student.faculty, expected_student["faculty"])
-    #     self.assertEqual(student.admittedTerm, expected_student["admittedTerm"])
-    #     self.assertEqual(student.UniId, expected_student["UniId"])
-    #     self.assertEqual(student.degree, expected_student["degree"])
-    #     self.assertEqual(student.gpa, expected_student["gpa"])
+    
     
     def test_get_student_by_name(self):
         create_student(username="Jae", firstname="Jae", lastname="Son", email="jae@example.com", password="jaepass", faculty="FST", admittedTerm="2022/2023", UniId="816000002", degree="BSc Computer Science", gpa="2.7")
@@ -356,18 +291,13 @@ class StudentIntegrationTests(unittest.TestCase):
         students = get_all_students_json()
         assert students != []
 
-    # def test_update_admittedTerm(self):
-    #     assert update_admittedTerm(1, "2023/2024") == True
-    
-    # # def test_update_yearOfStudy(self):
-    # #     assert update_yearofStudy(1, 1) == True
+   
     
     def test_get_student_by_UniId(self):
       student = get_student_by_UniId("816000000")
       assert student is not None
     
-    # def test_update_degree(self):
-    #     assert update_degree(1, "BSc Computer Science Special") == True
+    
 
 
 class StaffIntegrationTests(unittest.TestCase):
@@ -437,36 +367,10 @@ class ReviewIntegrationTests(unittest.TestCase):
         #print(review.to_json(student=get_student_by_id(review.studentID), staff=get_staff_by_id(review.createdByStaffID)))
         assert review is not None
 
-    # def test_calc_points_upvote(self):
-    #     self.test_create_review()
-    #     review = get_review(1)
-    #     print(review.to_json(student=get_student_by_id(review.studentID), staff=get_staff_by_id(review.createdByStaffID)))
-    #     assert review is not None
-    #     assert calculate_points_upvote(review) == True
-
-    # def test_calc_points_downvote(self):
-    #     self.test_create_review()
-    #     review = get_review(1)
-    #     print(review.to_json(student=get_student_by_id(review.studentID), staff=get_staff_by_id(review.createdByStaffID)))
-    #     assert review is not None
-    #     assert calculate_points_downvote(review) == True
-
-    # # Test for total starRating of positive reviews
-    # def test_get_total_positive_review_starRating(self):
-    #     self.test_create_review()  # Assuming this creates both positive and negative reviews
-    #     review = get_review(1)
-    #     total_positive = get_total_positive_review_starRating(review.studentID)
-    #     assert total_positive >= 0  # Ensure the total is non-negative
-
-    # # Test for total starRating of negative reviews
-    # def test_get_total_negative_review_starRating(self):
-    #     self.test_create_review()  # Assuming this creates both positive and negative reviews
-    #     review = get_review(1)
-    #     total_negative = get_total_negative_review_starRating(review.studentID)
-    #     assert total_negative >= 0  # Ensure the total is non-negative
+    
 
     def test_delete_review(self):
-        # self.test_create_review()
+        
 
         assert create_staff(username="Mark",firstname="Mark", lastname="Grayson", email="mark@example.com", password="markpass", faculty="FST") == True
         assert create_student(username="Nolan",
@@ -1454,14 +1358,7 @@ class ReplyIntegrationTests(unittest.TestCase):
 
 
 
-# class KarmaIntegrationTests(unittest.TestCase):
 
-#     def test_create_student(self):
-#         assert create_student(username="billy", firstname="Billy", lastname="John", email="billy@example.com", password="billypass", faculty="FST", admittedTerm="2022/2023", UniId="816000000", degree="BSc Computer Science", gpa="3.5") == True
-        
-    # def test_get_student_by_id(self):
-    #     #create_student(username="willy", firstname="Willy", lastname="Fohn", email="willy@example.com", password="willypass", faculty="FST", admittedTerm="2022/2023", UniId="816000001", degree="BSc Computer Science", gpa="2.5")
-    #     student = get_student_by_id(5)
 
 
 class KarmaIntegrationTests(unittest.TestCase):
@@ -1524,16 +1421,7 @@ class KarmaIntegrationTests(unittest.TestCase):
 
         student = get_student_by_username("billyjoel")
 
-        # karma_status = create_karma(points=100, studentID=student.ID)
-
-        # assert karma_status is True
-
-        # karma = get_karma(student.ID)
-
-        # assert karma.points == 100
-        # assert karma is not None
-        # assert karma.studentID == student.ID
-
+        
 
         assert create_staff(username="joe",firstname="Joe", lastname="Mama", email="joe@example.com", password="joepass", faculty="FST") == True
         assert create_student(username="billy",
@@ -1604,15 +1492,7 @@ class KarmaIntegrationTests(unittest.TestCase):
 
         student = get_student_by_username("billyjoel")
 
-        # karma_status = create_karma(points=100, studentID=student.ID)
-
-        # assert karma_status is True
-
-        # karma = get_karma(student.ID)
-
-        # assert karma.points == 100
-        # assert karma is not None
-        # assert karma.studentID == student.ID
+        
 
 
         assert create_staff(username="joe",firstname="Joe", lastname="Mama", email="joe@example.com", password="joepass", faculty="FST") == True
