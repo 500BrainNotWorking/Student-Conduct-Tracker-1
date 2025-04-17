@@ -933,7 +933,7 @@
                         <a href="/reviews/{{review.ID}}">
                             <div class="comments"><i class="fas fa-comment"></i>{{review.comments | length}}</div>
                         </a>
-                        <button class="expand-btn">Expand</button>
+                        <button class="expand-btn" style="display: none;">Expand</button>
 
                         {%if review.createdByStaffID == current_user.ID%}
                         <a href="/deleteReview/{{review.ID}}"><i class="fa fa-trash" aria-hidden="true"></i></a>

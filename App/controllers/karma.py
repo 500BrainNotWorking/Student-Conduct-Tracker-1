@@ -1,8 +1,5 @@
 from App.models import Karma, Student
 from App.database import db
-from .accomplishment import get_total_accomplishment_points
-from .incidentReport import get_total_incident_points
-from .transcript import calculate_academic_score
 from sqlalchemy.exc import SQLAlchemyError
 
 def get_karma(studentID):
