@@ -1,18 +1,13 @@
-from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
-from App.models import db, Student, Karma
+from flask import Blueprint, render_template, jsonify
+from App.models import db, Student
 from App.controllers import (
-    create_user,
     create_student,
     create_staff,
     create_admin,
-    create_karma,
-    create_job_recommendation,
-    create_accomplishment,
     get_staff_by_id,
     get_student_by_UniId,
     create_review,
 )
-from flask_login import login_required, login_user, current_user, logout_user
 
 index_views = Blueprint('index_views',
                         __name__,
@@ -22,28 +17,6 @@ index_views = Blueprint('index_views',
 @index_views.route('/', methods=['GET'])
 def index_page():
   return render_template('login.html')
-
-
-@index_views.route('/hello')
-def hello_world():
-  return 'Hello, World!'
-
-
-@index_views.route('/admin', methods=['GET'])
-@login_required
-def admin_page():
-  return render_template('Admin-Home.html')
-
-
-@index_views.route('/studentcsv', methods=['GET'])
-def indexs_page():
-  return render_template('StudentCSV.html')
-
-
-@index_views.route('/staffcsv', methods=['GET'])
-def csvStaffPage():
-  return render_template('StaffCSV.html')
-
 
 @index_views.route('/init', methods=['GET'])
 def init():
@@ -127,20 +100,6 @@ def init():
                password="password",
                faculty="FST")
 
-  # create_job_recommendation(
-  #     2, 7, False, "Job", "1",
-  #     "I am seeking a recommnedation for a position at a company", "WebTech",
-  #     "Web Developer", "webtech@gmail.com")
-  # create_job_recommendation(
-  #     2, 8, False, "Job", "1",
-  #     "I am seeking a recommnedation for a position at a company", "WebTech",
-  #     "Web Developer", "webtech@gmail.com")
-  # create_accomplishment(2, False, "Permanand Mohan", "Runtime",
-  #                       "I placed first at runtime.", 1, "None Yet")
-  # create_accomplishment(2, False, "Vijayanandh Rajamanickam", "Runtime",
-  #                       "I placed first at runtime.", 1, "None Yet")
-
-
   staff = get_staff_by_id(7)
   student1 = get_student_by_UniId(816031609)
   review1 = create_review(staff, student1, 5, "Behaves very well in class!")
@@ -160,22 +119,9 @@ def init():
                email="admin@example.com",
                password="password",
                faculty="FST")
-
-  students = Student.query.all()
-
-  # for student in students:
-  #   create_karma(student.ID)
-  #   student.karmaID = Karma.query.filter_by(
-  #       studentID=student.ID).first().karmaID
-
   return jsonify(message='db initialized!')
 
 
 @index_views.route('/healthcheck', methods=['GET'])
 def health_check():
   return jsonify({'status': 'healthy'})
-
-
-@index_views.route('/images/<path:filename>', methods=['GET'])
-def serve_image(filename):
-  return send_from_directory('/workspaces/Info3604_Project/images', filename)
