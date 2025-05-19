@@ -24,5 +24,6 @@
 * Tyrell Lewis
 * Alejandro Marin
 
-# For More information visit the Wiki Page
+# For More information visit the Wiki Page or see directly how to run the app.
 * [Wiki](https://github.com/500BrainNotWorking/Student-Conduct-Tracker-1/wiki)
+* [How to Run](https://github.com/500BrainNotWorking/Student-Conduct-Tracker-1/wiki/Implementation-(How-to-Run))
